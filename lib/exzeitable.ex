@@ -54,7 +54,6 @@ defmodule Exzeitable do
       @spec mount(:not_mounted_at_router | map, map, socket) :: {:ok, socket}
       def mount(:not_mounted_at_router, assigns, socket) do
         assigns = Map.new(assigns, fn {k, v} -> {String.to_atom(k), v} end)
-
         socket =
           socket
           |> assign(assigns)
@@ -162,18 +161,18 @@ defmodule Exzeitable do
         end
       end
 
-      defp maybe_set_refresh(%{socket: %{assigns: %{refresh: refresh}}} = socket)
-           when is_integer(refresh) do
-        with true <- connected?(socket),
-             {:ok, _tref} <- :timer.send_interval(refresh, self(), :refresh) do
-          socket
+      defp maybe_set_refresh(socket)  do
+        refresh = socket.assigns.params.refresh
+        if is_integer(refresh) do
+          with true <- connected?(socket),
+               {:ok, _tref} <- :timer.send_interval(refresh, self(), :refresh) do
+            socket
+          else
+            _ -> socket
+          end
         else
-          _ -> socket
+          socket
         end
-      end
-
-      defp maybe_set_refresh(socket) do
-        socket
       end
 
       defp assign_params(%{assigns: %{params: params}} = socket, key, value) do
