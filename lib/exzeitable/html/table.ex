@@ -2,7 +2,6 @@ defmodule Exzeitable.HTML.Table do
   @moduledoc "Builds the table part of the HTML"
   alias Exzeitable.{Params, Text}
   alias Exzeitable.HTML.{ActionButton, Filter, Format, Helpers}
-  alias PhoenixHTMLHelpers.Link
 
   @doc "Output the table as HTML"
   @spec build(map) :: {:safe, iolist}
@@ -91,8 +90,7 @@ defmodule Exzeitable.HTML.Table do
         _ -> "#{sort}  "
       end
 
-    Link.link(label,
-      to: "",
+    Helpers.tag(label,:a,
       class: "exz-sort-link",
       "phx-click": "sort_column",
       "phx-value-column": key

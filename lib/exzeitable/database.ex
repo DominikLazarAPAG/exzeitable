@@ -7,10 +7,10 @@ defmodule Exzeitable.Database do
   @spec get_records(map) :: [map]
   def get_records(%Params{query: query} = params) do
     query
+    |> modify_query(params)
     |> order_query(params)
     |> search_query(params)
     |> paginate_query(params)
-    |> modify_query(params)
     |> get_query(params)
   end
 
