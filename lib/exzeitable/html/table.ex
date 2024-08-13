@@ -80,8 +80,8 @@ defmodule Exzeitable.HTML.Table do
   defp sort_link_for({:actions, _v}, _params), do: {:safe, [""]}
   defp sort_link_for({_key, %{order: false}}, _params), do: {:safe, [""]}
 
-  defp sort_link_for({key, _v}, %Params{order: order} = params) do
-    sort = Text.text(params, :sort)
+  defp sort_link_for({key, _v}, %Params{order: _order} = _params) do
+    #sort = Text.text(params, :sort)
 
     # label =
     #   case order do
