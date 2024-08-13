@@ -83,18 +83,19 @@ defmodule Exzeitable.HTML.Table do
   defp sort_link_for({key, _v}, %Params{order: order} = params) do
     sort = Text.text(params, :sort)
 
-    label =
-      case order do
-        [desc: ^key] -> "#{sort} ▲"
-        [asc: ^key] -> "#{sort} ▼"
-        _ -> "#{sort}  "
-      end
+    # label =
+    #   case order do
+    #     [desc: ^key] -> ~s(<img src="/images/swap_vert_24_light_blue.svg" alt="#{sort}">)
+    #     [asc: ^key] -> ~s(<img src="/images/swap_vert_24_light_blue.svg" alt="#{sort}">)
+    #     _ ->
+    #   end
 
-    Helpers.tag(label,:a,
+    Helpers.tag(nil, :img, src: "/images/mecca_icons/swap_vert_24_light_blue.svg")
+    |>
+    Helpers.tag(:a,
       class: "exz-sort-link",
       "phx-click": "sort_column",
-      "phx-value-column": key
-    )
+      "phx-value-column": key)
   end
 
   defp maybe_nothing_found(content, %Params{list: []} = params) do
